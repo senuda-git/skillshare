@@ -147,7 +147,7 @@ function list_all_skills(): array
 function list_tutors_for_skill($skill_id)
 {
     global $mysqli;
-    $sql = "SELECT us.user_skill_id, us.skill_id, us.user_id, us.level, s.description , u.first_name, u.last_name, u.email
+    $sql = "SELECT us.user_skill_id, us.skill_id, us.user_id, us.level, us.skill_description , u.first_name, u.last_name, u.email
             FROM user_skills us, skills s, users u
             WHERE us.skill_id = s.skill_id
             AND us.user_id = u.user_id
@@ -163,7 +163,7 @@ function list_tutors_for_skill($skill_id)
 function get_user_skills($user_id)
 {
     global $mysqli;
-    $sql = "SELECT us.user_skill_id, s.skill_id, s.skill_name, us.level, s.description
+    $sql = "SELECT us.user_skill_id, s.skill_id, s.skill_name, us.level, us.skill_description
             FROM user_skills us, skills s
             WHERE us.skill_id = s.skill_id
             AND us.user_id = ?";

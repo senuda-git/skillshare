@@ -13,9 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   $skill_id = isset($_POST['skill_choice']) ? (int)$_POST['skill_choice'] : 0;
-  $level = $_POST['level'];
-  $skill_description = trim($_POST['skill_description']);
-  $user_skill = user_teaching_skill($uid, $skill_id);
+  $level = $_POST['level'] ?? 'Beginner';
+  $user_skill_description = trim($_POST['skill_description'] ?? '');
 
   // validate
   if ($skill_id <= 0) {
@@ -24,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // validate description
   if ($skill_description === '') {
-    $errors[] = "Please enter a description of what you teach.";
+    $errors[] = "Please enter a personal description of what you teach.";
   }
 
   // prevent duplicate skill addition
@@ -33,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if (empty($errors)) {
-
+    global $myssqli;
     // insert into user_skills
     $sql3 = "INSERT INTO user_skills (user_id, skill_id, level, skill_description) 
              VALUES (?, ?, ?, ?)";
     $stmt3 = $mysqli->prepare($sql3);
-    $stmt3->bind_param('iiss', $uid, $skill_id, $level, $skill_description);
+    $stmt3->bind_param('iiss', $uid, $skill_id, $level, $user_skill_description);
 
     if ($stmt3->execute()) {
       flash_message('Skill added successfully.');
@@ -62,6 +61,7 @@ $token = csrf_token();
   <meta charset="utf-8">
   <title>Add Skill - SkillShare</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <style> button.btn.primary.full-width{background: rgba(255, 255, 255, 0.25);}</style>
 </head>
 
 <body>
@@ -101,10 +101,10 @@ $token = csrf_token();
       </label>
       <br>
       <label>Description (what you teach)
-        <textarea name="skill_description"><?= e($_POST['skill_description'] ?? '') ?></textarea>
+        <textarea name="skill_description" rows="5" placeholder="Example: I focus on ... and have experiences..."><?= e($_POST['skill_description'] ?? '') ?></textarea>
       </label>
       <br>
-      <button type="submit" class="btn primary full-width">Add Skill</button>
+      <button type="submit" class="btn primary full-width" style="background:rgba(255, 255, 255, 0.5)">Add Skill</button>
     </form>
   </div>
 </body>

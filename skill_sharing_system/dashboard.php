@@ -46,10 +46,10 @@ $token = csrf_token();
           <?php foreach ($my_skills as $s): ?>
             <li>
               <strong><?= e($s['skill_name']) ?></strong> — <?= e($s['level']) ?>
-              <div class="small"><?= e($s['description']) ?></div>
+              <div class="small"><?= e($s['skill_description']) ?></div>
               <br><br>
-              <a href="skill_edit.php?user_skill_id=<?= (int)$s['user_skill_id'] ?>">Edit</a><br>
-              <a href="skill_view.php?skill_id=<?= (int)$s['skill_id'] ?>">View Tutors who tutoring <?= e($s['skill_name']) ?></a>
+              <a href="skill_edit.php?user_skill_id=<?= (int)$s['user_skill_id'] ?>" class="btn" style="background:rgba(255, 255, 255, 0.3)">Edit</a></t>
+              <a href="skill_view.php?skill_id=<?= (int)$s['skill_id'] ?>" class="btn" style="background:rgba(255, 255, 255, 0.3)">View Tutors who tutoring <?= e($s['skill_name']) ?></a>
               
             </li>
           <?php endforeach; ?>
@@ -59,6 +59,7 @@ $token = csrf_token();
     </div>
     </div>
 
+    <!-- booking section outgoing -->
     <div class="card" style="transform: translateZ(0px);">
     <div class="bookings-section-requests">
       <h3>Incoming Requests</h3>
@@ -78,6 +79,7 @@ $token = csrf_token();
           </thead>
           <tbody>
             <?php foreach ($bookings as $b): ?>
+              <?php if ($b['tutor_id'] != $uid)continue; ?>
               <tr>
                 <td><?= e($b['skill_name']) ?></td>
                 <td><?= e($b['learner_first'] . ' ' . $b['learner_last']) ?></td>
@@ -85,7 +87,7 @@ $token = csrf_token();
                 <td><?= e(substr($b['message'], 0, 60)) ?><?= strlen($b['message']) > 60 ? '...' : '' ?></td>
                 <td><?= e(ucfirst($b['status'])) ?></td>
                 <td>
-                  <?php if ($b['tutor_id'] == $uid && $b['status'] == 'pending'): ?>
+                  <?php if ($b['status'] == 'pending'): ?>
                     <form method="post" action="booking_status.php" style="display:inline">
                       <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
                       <input type="hidden" name="booking_id" value="<?= (int)$b['booking_id'] ?>">
@@ -104,6 +106,7 @@ $token = csrf_token();
     </div>
     </div>
 
+    <!-- booking section incoming -->
     <div class="card" style="transform: translateZ(0px);">
     <div class="bookings-section-incoming">
     <h3>My Sent Requests</h3>

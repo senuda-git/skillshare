@@ -86,11 +86,11 @@ $token = csrf_token();
                       <form method="post" style="display:inline">
                         <input type="hidden" name="csrf" value="<?= e($token) ?>">
                         <input type="hidden" name="booking_id" value="<?= (int)$b['booking_id'] ?>">
-                        <button name="action" value="approved" class="btn small">Approved</button>
+                        <button name="action" value="approved" class="btn small success">Approved</button>
                         <button name="action" value="rejected" class="btn small danger">Rejected</button>
                       </form>
                     <?php else: ?>
-                      Completed
+                      --------
                     <?php endif; ?>
                   </td>
                 </tr>

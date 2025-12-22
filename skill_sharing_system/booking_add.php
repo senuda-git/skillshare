@@ -35,19 +35,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors[] = 'You cannot request a session with yourself.';
   }
 
-  // validate proposed time
-  if ($_POST['proposed_time'] === '') {
-    $errors[] = 'Please propose a time for the session.';
+
+  $proposed_time_input = $_POST['proposed_time'] ?? '';
+  if (!empty($proposed_time_input)) {
+    $proposed_ts = strtotime($proposed_time_input);
+    $now = time();
+    $two_hours_from_now = $now + (2 * 3600); // 3600 seconds in an hour
+
+    //Prevent booking on past
+    if($proposed_ts < $now){
+      $errors[] = "You cannot go into past.";
+    }
+
+    // Check 2-hour advance time
+    if ($proposed_ts < $two_hours_from_now) {
+      $errors[] = 'Please book at least 2 hours in advance.';
+    }
+
+    // Check working Hours
+    $hour = (int)date('H', $proposed_ts);
+    $start_hour = 8;  // 8 AM
+    $end_hour = 17;   // 5 PM
+
+    if ($hour < $start_hour || $hour >= $end_hour) {
+      $errors[] = "Sessions can only be booked during business hours (0{$start_hour}:00 to {$end_hour}:00).";
+    }
+
+    //Prevent booking on weekends
+    $day_of_week = date('N', $proposed_ts); // 1 (Mon) to 7 (Sun)
+    if ($day_of_week > 5) {
+      $errors[] = 'Sessions are only available Monday through Friday.';
+    }
   }
 
-  // validate proposed time is in the future
-  $min_time = date('Y-m-d H:i', strtotime('+2 hours'));
-  if (strtotime($_POST['proposed_time']) < (time()+7200)) {
-    $errors[] = 'Please book at least 2 hours in advance.';
-  }
-
-  // validate proposed time is within business hours
- 
 
   // insert booking
   if (empty($errors)) {
@@ -65,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 $token = csrf_token();
 ?>
+
 <!doctype html>
 <html>
 

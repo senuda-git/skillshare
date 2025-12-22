@@ -21,6 +21,8 @@ if (!$skill) {
 // tutors
 $tutors = list_tutors_for_skill($skill_id);
 ?>
+
+
 <!doctype html>
 <html>
 
@@ -33,8 +35,8 @@ $tutors = list_tutors_for_skill($skill_id);
 <body>
   <?php include 'templates/header.php'; ?>
   <div class="container">
-    <h2><?= e($skill['skill_name']) ?></h2>
-    <p><?= e($skill['description']) ?></p>
+    <h1><?= e($skill['skill_name']) ?></h1>
+    <p><?= e($skill['description']) ?></p><br>
 
     <h3>Available Tutors</h3>
     <?php if (empty($tutors)): ?>
@@ -45,7 +47,7 @@ $tutors = list_tutors_for_skill($skill_id);
           <li>
             <strong><?= e($t['first_name'] . ' ' . $t['last_name']) ?></strong>
             <div class="muted">Level: <?= e($t['level']) ?></div>
-            <div><?= e($t['description']) ?></div><br>
+            <div><?= e($t['skill_description']) ?></div><br>
             <?php if (is_logged_in()): ?>
               <a href="booking_add.php?user_skill_id=<?= (int)$t['user_skill_id'] ?>" class="btn">Request Session</a>
             <?php else: ?>

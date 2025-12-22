@@ -7,9 +7,11 @@
   /* Gradients & Accents */
   --primary: #8b5cf6;
   --accent-glow: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --glass-surface: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.07) 0%,
-      rgba(255, 255, 255, 0.03) 100%);
+  --glass-surface: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
   --glass-border: 1px solid rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   --backdrop: blur(16px);
@@ -82,6 +84,7 @@ body::after {
   max-width: 1000px;
   margin: 0 auto;
   padding: 40px 24px;
+  min-width: 50%;
 }
 
 .container-narrow {
@@ -90,7 +93,7 @@ body::after {
 
 /* --- GLASS CARDS --- */
 
-.tutor-skills-list{
+.tutor-skills-list {
   background: var(--glass-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -162,35 +165,22 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 10px 24px;
-
   border-radius: var(--radius-btn);
-
-  background: rgba(255, 255, 255, 0.05);
-
+  background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
-
   color: var(--text-main);
-
   text-decoration: none;
-
   font-weight: 500;
-
   font-size: 0.95rem;
-
   cursor: pointer;
-
   transition: all 0.5s ease;
 }
 
 .btn:hover {
   background: var(--text-main);
-
   color: var(--bg-deep);
-
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
 }
 
@@ -243,25 +233,15 @@ input,
 select,
 textarea {
   width: 100%;
-
   background: rgba(0, 0, 0, 0.4);
-
   border: 1px solid rgba(255, 255, 255, 0.1);
-
   color: white;
-
   padding: 14px;
-
   border-radius: 12px;
-
   font-size: 1rem;
-
   font-family: inherit;
-
   margin-bottom: 20px;
-
   outline: none;
-
   transition: 0.2s ease;
 }
 
@@ -404,7 +384,7 @@ textarea:focus {
   position: relative;
   z-index: 1100;
   position: sticky;
-  scroll;
+  scroll-behavior: smooth;
 }
 
 header {
@@ -432,33 +412,33 @@ header {
 }
 
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
-    text-decoration: none;
-    color: #b6b6b6;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-block; /* Allows transform to work nicely */
+  text-decoration: none;
+  color: #b6b6b6;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  /* Allows transform to work nicely */
 }
 
 .nav a:hover {
   color: #007bff;
   transform: translateY(-1px);
   transition: transform 0.3s ease;
-
 }
 
 .nav-links a:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 4px;
-    border-radius: 4px;
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .nav-toggle,
@@ -471,7 +451,7 @@ header {
   cursor: pointer;
   flex-direction: column;
   gap: 5px;
-  padding: 5px ;
+  padding: 5px;
 }
 
 .nav-toggle-label span {
@@ -483,23 +463,23 @@ header {
 }
 
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-    position: relative;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 .nav-links a {
-    text-decoration: none;
-    color: #b6b6b6;
-    font-weight: 500;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: #b6b6b6;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 @media (max-width: 768px) {
@@ -538,19 +518,19 @@ header {
     padding: 1rem;
   }
 
-  .nav-toggle:checked~.nav-links {
+  .nav-toggle:checked ~ .nav-links {
     max-height: 400px;
   }
 
-  .nav-toggle:checked~.nav-toggle-label span:nth-child(1) {
+  .nav-toggle:checked ~ .nav-toggle-label span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 6px);
   }
 
-  .nav-toggle:checked~.nav-toggle-label span:nth-child(2) {
+  .nav-toggle:checked ~ .nav-toggle-label span:nth-child(2) {
     opacity: 0;
   }
 
-  .nav-toggle:checked~.nav-toggle-label span:nth-child(3) {
+  .nav-toggle:checked ~ .nav-toggle-label span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -6px);
   }
 }
